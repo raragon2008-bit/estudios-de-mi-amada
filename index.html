@@ -1,0 +1,643 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Huesos y músculos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Patrick+Hand&display=swap">
+<style>
+/* Concepto: hoja de cuaderno cuadriculado, tinta azul de bolígrafo, subrayador amarillo y bolígrafo rojo para lo que importa. Una sola columna, pensada para el móvil. */
+:root{
+  --paper:#f5f8fd;
+  --grid:#dde6f4;
+  --card:#ffffff;
+  --card2:#eef3ff;
+  --ink:#16246b;
+  --ink2:#4a5890;
+  --line:#c5d1ea;
+  --accent:#2742cf;
+  --accent-ink:#ffffff;
+  --hl:#ffe45c;
+  --hl-soft:rgba(255,222,53,.55);
+  --pen:#d6423a;
+  --good:#12805a;
+  --good-bg:#dff3ea;
+  --bad:#c3342c;
+  --bad-bg:#fde5e3;
+  --f-display:'Patrick Hand','Segoe Print','Bradley Hand',cursive;
+  --f-body:'Figtree',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0e1425;--grid:#19213b;--card:#161d35;--card2:#1c2545;--ink:#e8edff;--ink2:#9fadd9;--line:#2b3560;
+    --accent:#8ea3ff;--accent-ink:#0e1425;--hl:#e8cd2e;--hl-soft:rgba(240,210,40,.30);--pen:#ff7b71;
+    --good:#53d6a0;--good-bg:#113a2c;--bad:#ff8c83;--bad-bg:#431a1c;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0e1425;--grid:#19213b;--card:#161d35;--card2:#1c2545;--ink:#e8edff;--ink2:#9fadd9;--line:#2b3560;
+  --accent:#8ea3ff;--accent-ink:#0e1425;--hl:#e8cd2e;--hl-soft:rgba(240,210,40,.30);--pen:#ff7b71;
+  --good:#53d6a0;--good-bg:#113a2c;--bad:#ff8c83;--bad-bg:#431a1c;color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100%;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;
+  padding-block:20px 56px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.app{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,.flip-face:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* cabecera */
+.top{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;justify-content:space-between}
+.eyebrow{margin:0 0 2px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(38px,9vw,56px);line-height:1;text-wrap:balance}
+h1 mark{background:linear-gradient(transparent 52%,var(--hl-soft) 52%);color:inherit;padding:0 4px;margin:0 -4px}
+.rank{min-width:210px;flex:1 1 210px;max-width:300px}
+.rank-row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.rank-name{font-family:var(--f-display);font-size:22px;line-height:1.1}
+.rank-xp{font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.bar{height:10px;border:2px solid var(--ink);border-radius:99px;background:var(--card);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .5s ease}
+
+/* controles */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:99px;padding:7px 14px;min-height:38px;font-size:14px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border-bottom:2px solid var(--ink)}
+.tab{border:2px solid transparent;border-bottom:0;border-radius:12px 12px 0 0;background:transparent;padding:10px 4px 8px;min-height:48px;font-family:var(--f-display);font-size:clamp(18px,4.6vw,23px);line-height:1.1}
+.tab[aria-selected="true"]{background:var(--card);border-color:var(--ink);margin-bottom:-2px;padding-bottom:10px}
+.tab:not([aria-selected="true"]):hover{background:var(--card2)}
+
+/* escenario */
+.stage{display:flex;flex-direction:column;gap:14px}
+.meter{display:flex;flex-direction:column;font-size:13px;color:var(--ink2)}
+.panel{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:22px;box-shadow:4px 4px 0 var(--line)}
+.panel.center{text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.panel h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:32px;line-height:1.1;text-wrap:balance}
+.panel p{margin:0}
+.btn{border:2px solid var(--ink);border-radius:10px;background:var(--card);padding:10px 18px;min-height:46px;font-weight:600;transition:transform .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.5;cursor:default;transform:none}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-row.one{grid-template-columns:1fr}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pen)}
+
+/* tarjetas */
+.flip{perspective:1400px}
+.flip-in{display:grid;transition:transform .55s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.flip-face{grid-area:1/1;min-height:300px;padding:24px;border:2px solid var(--ink);border-radius:14px;background:var(--card);box-shadow:4px 4px 0 var(--line);backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;gap:14px;cursor:pointer}
+.flip-face.front{justify-content:space-between}
+.flip-face.back{transform:rotateY(180deg);background:var(--card2);justify-content:flex-start}
+.q{margin:0;font-family:var(--f-display);font-size:clamp(28px,7vw,38px);line-height:1.15;text-wrap:balance}
+.hint{font-size:13px;color:var(--ink2)}
+.ans{margin:0;font-size:19px;line-height:1.45;font-weight:500}
+.ans-list{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px;font-size:18px;font-weight:500}
+.ex{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ex span{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.ex b{font-weight:600;font-size:15px;background:var(--hl-soft);padding:2px 10px;border-radius:6px}
+.nota{margin:0;font-size:15px;color:var(--pen);font-family:var(--f-display);font-size:20px}
+
+/* test */
+.dots{display:flex;gap:6px}
+.dots i{flex:1;height:8px;border-radius:99px;background:var(--line)}
+.dots i.ok{background:var(--good)}
+.dots i.ko{background:var(--bad)}
+.dots i.cur{background:var(--accent)}
+.statline{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.statline b{color:var(--ink)}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;border:2px solid var(--line);border-radius:12px;background:var(--card);padding:13px 16px;min-height:52px;font-size:17px;font-weight:500;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.right{border-color:var(--good);background:var(--good-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt:disabled{cursor:default;color:inherit}
+.fb{border-radius:12px;padding:12px 16px;font-size:16px}
+.fb.good{background:var(--good-bg);border:2px solid var(--good)}
+.fb.bad{background:var(--bad-bg);border:2px solid var(--bad)}
+.fb strong{display:block;font-family:var(--f-display);font-weight:400;font-size:22px;line-height:1.2}
+.big{font-family:var(--f-display);font-size:68px;line-height:1}
+
+/* parejas */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match-col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.mbtn{border:2px solid var(--line);border-radius:12px;background:var(--card);padding:10px 12px;min-height:58px;font-size:15px;font-weight:500;text-align:left;display:flex;align-items:center;transition:border-color .15s,background .15s,opacity .3s}
+.mbtn.term{font-family:var(--f-display);font-size:20px;font-weight:400;line-height:1.15}
+.mbtn:hover:not(:disabled){border-color:var(--accent)}
+.mbtn.sel{border-color:var(--accent);background:var(--card2);box-shadow:inset 0 0 0 1px var(--accent)}
+.mbtn.done{border-color:var(--good);background:var(--good-bg);opacity:.75}
+.mbtn.bad{border-color:var(--bad);background:var(--bad-bg);animation:shake .4s}
+.mbtn:disabled{cursor:default;color:inherit}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.recap{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;text-align:left;width:100%;font-size:15px}
+.recap li{padding:8px 12px;background:var(--card2);border-radius:8px}
+.recap b{font-family:var(--f-display);font-size:19px;font-weight:400}
+
+/* clasifica */
+.item{font-family:var(--f-display);font-size:clamp(30px,8vw,42px);line-height:1.15;text-align:center;text-wrap:balance;padding:18px 0}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.cat{border:2px solid var(--ink);border-radius:12px;background:var(--card);padding:12px 10px;min-height:54px;font-weight:600;font-size:15px}
+.cat:hover:not(:disabled){background:var(--card2)}
+.cat.right{border-color:var(--good);background:var(--good-bg)}
+.cat.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.cat:disabled{cursor:default;color:inherit}
+
+.foot{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink2);padding-top:6px}
+.link{background:none;border:0;padding:6px 0;color:var(--ink2);text-decoration:underline;font-size:13px}
+
+@media (max-width:420px){
+  .panel{padding:18px}
+  .flip-face{padding:20px;min-height:320px}
+  .mbtn{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+<div class="app">
+  <header class="top">
+    <div>
+      <p class="eyebrow">Atención Sanitaria · Sistema esquelético-muscular</p>
+      <h1>Huesos y <mark>músculos</mark></h1>
+    </div>
+    <div class="rank" aria-label="Tu progreso">
+      <div class="rank-row"><span class="rank-name" id="rankName">Falange</span><span class="rank-xp" id="rankXp">0 XP</span></div>
+      <div class="bar" role="progressbar" aria-label="Progreso hacia el siguiente rango"><i id="xpBar" style="width:0%"></i></div>
+    </div>
+  </header>
+
+  <nav class="chips" id="chips" aria-label="Tema"></nav>
+
+  <div class="tabs" role="tablist" id="tabs">
+    <button class="tab" role="tab" data-mode="cards">Tarjetas</button>
+    <button class="tab" role="tab" data-mode="quiz">Test</button>
+    <button class="tab" role="tab" data-mode="match">Parejas</button>
+    <button class="tab" role="tab" data-mode="classify">Clasifica</button>
+  </div>
+
+  <main class="stage" id="stage"></main>
+
+  <footer class="foot">
+    <span>Hecho con tus apuntes. El progreso se guarda en este navegador.</span>
+    <button class="link" id="reset" type="button">Borrar progreso</button>
+  </footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- contenido ---------- */
+var TOPICS=[["all","Todo"],["base","El esqueleto"],["huesos","Huesos"],["art","Articulaciones"],["mus","Músculos"],["fun","Funciones"],["pat","Patologías"],["prev","Hábitos"]];
+var TOPIC_NAME={};TOPICS.forEach(function(t){TOPIC_NAME[t[0]]=t[1];});
+TOPIC_NAME.prev="Prevención y actividad física";
+
+var CARDS=[
+{id:"b1",t:"base",q:"¿Qué forma el sistema osteomuscular?",a:"Huesos, cartílagos, músculos, articulaciones, ligamentos y tendones."},
+{id:"b2",t:"base",q:"¿Cómo se llama el conjunto de huesos del cuerpo humano?",a:"Esqueleto."},
+{id:"b3",t:"base",q:"¿Cuántos huesos tiene el esqueleto y cómo se agrupan?",a:"206 huesos, que se clasifican según la zona del cuerpo donde se localizan.",exl:"Zonas",ex:["Cráneo y cara","Tronco","Extremidades"]},
+{id:"b4",t:"base",q:"¿Cuáles son las funciones principales del esqueleto?",a:["Sostén del cuerpo","Protección de órganos internos o delicados","Mecánica o motora (ejecución del movimiento)"]},
+
+{id:"h1",t:"huesos",q:"¿Qué es un hueso?",a:"Un órgano duro y resistente que forma parte del esqueleto de los vertebrados."},
+{id:"h2",t:"huesos",q:"¿De qué tejidos están compuestos los huesos?",a:["Tejido óseo compacto: está en el exterior del hueso y rodea al esponjoso","Tejido óseo esponjoso"]},
+{id:"h3",t:"huesos",q:"¿Para qué sirven los huesos junto con el cartílago?",a:"Dan forma al cuerpo."},
+{id:"h4",t:"huesos",q:"Según su forma externa, ¿cómo se clasifican los huesos?",a:"En largos, cortos, planos e irregulares."},
+{id:"h5",t:"huesos",q:"Huesos largos",a:"La longitud predomina sobre la anchura.",ex:["Fémur","Tibia","Húmero"]},
+{id:"h6",t:"huesos",q:"Huesos cortos",a:"No predomina ninguna de las tres dimensiones, por lo que tienen un aspecto cúbico.",ex:["Carpo de la mano","Tarso del pie"]},
+{id:"h7",t:"huesos",q:"Huesos planos",a:"Son huesos delgados y de aspecto curvo.",ex:["Cráneo","Costillas"]},
+{id:"h8",t:"huesos",q:"Huesos irregulares",a:"Por sus características morfológicas no pueden incluirse en ninguno de los otros tipos.",ex:["Vértebras","Sacro"]},
+
+{id:"a1",t:"art",q:"¿Qué es una articulación?",a:"La zona de unión entre dos huesos próximos, que permite habitualmente el movimiento entre ellos."},
+{id:"a2",t:"art",q:"¿Cómo se clasifican las articulaciones?",a:"Según su movimiento: fibrosas, cartilaginosas y sinoviales."},
+{id:"a3",t:"art",q:"Articulaciones fibrosas",a:"No tienen movimiento.",ex:["Suturas del cráneo"]},
+{id:"a4",t:"art",q:"Articulaciones cartilaginosas",a:"Tienen poco movimiento.",ex:["Sínfisis del pubis"]},
+{id:"a5",t:"art",q:"Articulaciones sinoviales",a:"Tienen gran amplitud de movimiento: son muy móviles.",ex:["Codo","Cadera","Rodilla","Hombro"]},
+
+{id:"m1",t:"mus",q:"¿Qué es un músculo?",a:"Un órgano fibroso y contráctil que rodea al esqueleto. Puede contraerse y extenderse, y así genera el movimiento."},
+{id:"m2",t:"mus",q:"¿Qué producen los músculos y por qué?",a:"Producen movimiento y calor por su capacidad de contracción. Además dan estabilidad al cuerpo."},
+{id:"m3",t:"mus",q:"¿De qué están compuestos los músculos?",a:"De células llamadas miocitos, que se agrupan en fibras musculares. Las fibras se contraen mediante estímulos nerviosos."},
+{id:"m4",t:"mus",q:"¿Qué tipos de músculos hay?",a:["Músculo liso","Músculo estriado o esquelético","Músculo cardíaco"]},
+{id:"m5",t:"mus",q:"Músculo liso",a:"Movimientos de contracción involuntaria.",ex:["Capa interna muscular del estómago"]},
+{id:"m6",t:"mus",q:"Músculo estriado o esquelético",a:"Movimientos de contracción voluntaria. Está unido a los huesos.",ex:["Bíceps","Glúteos","Tríceps","Gemelos"]},
+{id:"m7",t:"mus",q:"Músculo cardíaco",a:"Movimientos de contracción involuntaria.",ex:["Músculo del corazón"]},
+
+{id:"f1",t:"fun",q:"¿Qué funciones tiene el sistema esquelético-muscular?",a:["Sostén","Protección","Motora","Hematopoyética","Reservorio o metabólica"]},
+{id:"f2",t:"fun",q:"Función de sostén",a:"El esqueleto es el armazón rígido del cuerpo para los demás tejidos y órganos. Da forma y apoyo al cuerpo."},
+{id:"f3",t:"fun",q:"Función de protección",a:"Protege a los órganos vitales internos."},
+{id:"f4",t:"fun",q:"Función motora",a:"Los huesos y las articulaciones actúan como palancas cuando los músculos insertados en ellos se contraen. Así se produce el movimiento."},
+{id:"f5",t:"fun",q:"Función hematopoyética",a:"Los huesos producen células sanguíneas en la médula ósea.",exl:"Células",ex:["Plaquetas","Glóbulos rojos","Glóbulos blancos"],nota:"Hema = sangre · poyesis = formación"},
+{id:"f6",t:"fun",q:"Función de reservorio o metabólica",a:"Los huesos funcionan almacenando minerales.",ex:["Calcio","Fósforo","Magnesio","Sodio"]},
+
+{id:"p1",t:"pat",q:"Fractura",a:"Lesión traumática de un hueso en la que se interrumpe la continuidad del tejido óseo. En resumen: la rotura de un hueso."},
+{id:"p2",t:"pat",q:"Hernia de disco",a:"Salida de parte del contenido del disco intervertebral."},
+{id:"p3",t:"pat",q:"Osteoporosis",a:"Pérdida de densidad ósea debida a una menor cantidad de calcio en el hueso."},
+{id:"p4",t:"pat",q:"Artrosis",a:"Enfermedad degenerativa producida por el desgaste del cartílago que protege los extremos de los huesos.",nota:"-osis = desgaste"},
+{id:"p5",t:"pat",q:"Artritis",a:"Inflamación de las articulaciones.",nota:"-itis = inflamación"},
+{id:"p6",t:"pat",q:"Carcinoma óseo (tumor óseo)",a:"Crecimiento anormal de células en el tejido óseo."},
+{id:"p7",t:"pat",q:"Esguince",a:"Lesión de los ligamentos que rodean a una articulación."},
+
+{id:"v1",t:"prev",q:"¿Qué hay que hacer para prevenir la osteoporosis?",a:["Dieta equilibrada rica en calcio","Exposición moderada al sol","Realizar ejercicios de fuerza","Beber de 2 a 2,5 l de agua al día","Evitar alcohol, drogas y tabaco","Dormir 8 h diarias"]},
+{id:"v2",t:"prev",q:"¿Por qué es tan importante educar para realizar alguna actividad física?",a:["Ayuda a mantener la movilidad articular, muscular y la posición corporal","Mantiene los huesos fuertes (evita la descalcificación)","Mejora la circulación y la respiración","Previene enfermedades y la obesidad","Refuerza la actividad intelectual","Mejora el estado de ánimo","Mejora la resistencia al estrés y a la actividad física"]}
+];
+
+var QUIZ=[
+{t:"base",q:"¿Cuántos huesos tiene el esqueleto humano?",a:"206",w:["106","186","260"]},
+{t:"base",q:"¿Cómo se llama el conjunto de huesos del cuerpo humano?",a:"Esqueleto",w:["Sistema articular","Médula ósea","Aparato muscular"]},
+{t:"base",q:"¿Cuál de estos elementos forma parte del sistema osteomuscular?",a:"Los tendones",w:["Los pulmones","El estómago","Los riñones"],e:"Lo forman huesos, cartílagos, músculos, articulaciones, ligamentos y tendones."},
+{t:"base",q:"Según la zona del cuerpo, el esqueleto se divide en cráneo y cara, tronco y...",a:"extremidades",w:["vísceras","articulaciones","músculos"]},
+{t:"base",q:"¿Cuál es una de las tres funciones principales del esqueleto?",a:"Proteger órganos internos o delicados",w:["Digerir los alimentos","Producir hormonas","Regular la temperatura de la piel"],e:"Sostén del cuerpo, protección de órganos y función mecánica o motora."},
+
+{t:"huesos",q:"¿Dónde se encuentra el tejido óseo compacto?",a:"En el exterior del hueso, rodeando al esponjoso",w:["Solo en el centro del hueso","Únicamente en las articulaciones","Dentro de los músculos"]},
+{t:"huesos",q:"¿Para qué sirven los huesos junto con el cartílago?",a:"Dan forma al cuerpo",w:["Producen calor","Transmiten los estímulos nerviosos","Contraen los músculos"]},
+{t:"huesos",q:"Según su forma externa, los huesos se clasifican en...",a:"Largos, cortos, planos e irregulares",w:["Compactos, esponjosos, largos y duros","Fibrosos, cartilaginosos y sinoviales","Lisos, estriados y cardíacos"]},
+{t:"huesos",q:"El fémur, la tibia y el húmero son huesos...",a:"largos",w:["cortos","planos","irregulares"],e:"En los huesos largos la longitud predomina sobre la anchura."},
+{t:"huesos",q:"Las costillas son huesos...",a:"planos",w:["largos","cortos","irregulares"],e:"Los huesos planos son delgados y de aspecto curvo."},
+{t:"huesos",q:"Las vértebras y el sacro son huesos...",a:"irregulares",w:["largos","cortos","planos"]},
+{t:"huesos",q:"¿Qué tipo de hueso tiene aspecto cúbico, como los del carpo y el tarso?",a:"Cortos",w:["Largos","Planos","Irregulares"],e:"En ellos no predomina ninguna de las tres dimensiones."},
+
+{t:"art",q:"¿Qué es una articulación?",a:"La zona de unión entre dos huesos próximos",w:["Una fibra que rodea al músculo","Un hueso que protege un órgano","Un tejido que produce calor"]},
+{t:"art",q:"Las suturas del cráneo son articulaciones...",a:"fibrosas",w:["cartilaginosas","sinoviales","estriadas"],e:"No tienen movimiento."},
+{t:"art",q:"La sínfisis del pubis es una articulación...",a:"cartilaginosa",w:["fibrosa","sinovial","lisa"],e:"Las cartilaginosas permiten poco movimiento."},
+{t:"art",q:"Codo, cadera, rodilla y hombro son articulaciones...",a:"sinoviales",w:["fibrosas","cartilaginosas","óseas"],e:"Tienen gran amplitud de movimiento."},
+{t:"art",q:"¿Qué articulaciones no permiten ningún movimiento?",a:"Las fibrosas",w:["Las sinoviales","Las cartilaginosas","Todas permiten movimiento"]},
+
+{t:"mus",q:"Los músculos están formados por células llamadas...",a:"miocitos",w:["osteocitos","plaquetas","neuronas"],e:"Los miocitos se agrupan en fibras musculares."},
+{t:"mus",q:"¿Qué producen los músculos al contraerse?",a:"Movimiento y calor",w:["Glóbulos rojos y blancos","Calcio y fósforo","Solo hueso nuevo"]},
+{t:"mus",q:"¿Cómo se contraen las fibras musculares?",a:"Mediante estímulos nerviosos",w:["Por el calcio de los huesos","Por la presión de las articulaciones","Por el desgaste del cartílago"]},
+{t:"mus",q:"El bíceps es un músculo...",a:"estriado, de contracción voluntaria",w:["liso, de contracción involuntaria","cardíaco, de contracción involuntaria","liso, de contracción voluntaria"]},
+{t:"mus",q:"La capa muscular interna del estómago es músculo...",a:"liso, de contracción involuntaria",w:["estriado, de contracción voluntaria","estriado, unido a los huesos","óseo"]},
+{t:"mus",q:"¿Qué músculo se contrae de forma involuntaria y está en el corazón?",a:"Músculo cardíaco",w:["Músculo estriado","Bíceps","Gemelos"]},
+{t:"mus",q:"Glúteos, tríceps y gemelos son músculos...",a:"estriados o esqueléticos",w:["lisos","cardíacos","involuntarios"],e:"Están unidos a huesos y su contracción es voluntaria."},
+
+{t:"fun",q:"¿Cuál es la función hematopoyética?",a:"Producir células sanguíneas en la médula ósea",w:["Almacenar calcio y fósforo","Proteger los órganos vitales","Mover los huesos como palancas"]},
+{t:"fun",q:"¿Qué significa hematopoyética?",a:"Formación de sangre",w:["Almacén de minerales","Movimiento del hueso","Protección de órganos"],e:"Hema = sangre, poyesis = formación."},
+{t:"fun",q:"¿Cuál de estas son células sanguíneas?",a:"Plaquetas, glóbulos rojos y glóbulos blancos",w:["Miocitos, plaquetas y fibras","Cartílagos, glóbulos y tendones","Ligamentos, plaquetas y miocitos"]},
+{t:"fun",q:"Almacenar calcio, fósforo, magnesio y sodio es la función de...",a:"reservorio o metabólica",w:["hematopoyética","motora","sostén"]},
+{t:"fun",q:"Los huesos y las articulaciones actúan como palancas cuando se contraen los músculos. ¿Qué función es?",a:"Motora",w:["De protección","De sostén","Hematopoyética"]},
+{t:"fun",q:"El esqueleto es el armazón rígido del cuerpo. ¿Qué función cumple?",a:"Sostén",w:["Protección","Reservorio","Hematopoyética"]},
+
+{t:"pat",q:"La osteoporosis es...",a:"una pérdida de densidad ósea por menos calcio en el hueso",w:["la inflamación de las articulaciones","la rotura de un hueso","una lesión de los ligamentos"]},
+{t:"pat",q:"La artritis es...",a:"la inflamación de las articulaciones",w:["el desgaste del cartílago","la salida del contenido del disco","un crecimiento anormal de células óseas"],e:"Truco: -itis significa inflamación."},
+{t:"pat",q:"La artrosis es una enfermedad degenerativa causada por...",a:"el desgaste del cartílago de los extremos de los huesos",w:["la inflamación de las articulaciones","la falta de sueño","la rotura de los ligamentos"],e:"Truco: -osis aquí se asocia con desgaste."},
+{t:"pat",q:"¿Qué es una hernia de disco?",a:"La salida de parte del contenido del disco intervertebral",w:["La rotura de una vértebra","La inflamación de una articulación","El desgaste del cartílago"]},
+{t:"pat",q:"El carcinoma óseo (tumor óseo) consiste en...",a:"un crecimiento anormal de células en el tejido óseo",w:["una pérdida de calcio en el hueso","una lesión traumática de un hueso","una lesión de ligamentos"]},
+{t:"pat",q:"¿Qué lesión afecta a los ligamentos que rodean una articulación?",a:"Esguince",w:["Fractura","Artrosis","Hernia de disco"]},
+{t:"pat",q:"Una fractura es...",a:"una lesión traumática en la que se rompe el tejido óseo",w:["la inflamación de una articulación","la lesión de un ligamento","la pérdida de densidad ósea"]},
+
+{t:"prev",q:"¿Cuál de estas medidas ayuda a prevenir la osteoporosis?",a:"Dieta equilibrada rica en calcio",w:["Fumar con moderación","Evitar siempre el sol","Dormir pocas horas"]},
+{t:"prev",q:"¿Cuánta agua se recomienda beber al día?",a:"De 2 a 2,5 litros",w:["Medio litro","De 4 a 5 litros","Un vaso"]},
+{t:"prev",q:"¿Cuántas horas conviene dormir al día?",a:"8 horas",w:["4 horas","5 horas","12 horas"]},
+{t:"prev",q:"¿Qué conviene evitar para cuidar los huesos?",a:"Alcohol, drogas y tabaco",w:["El ejercicio de fuerza","La exposición moderada al sol","El calcio"]},
+{t:"prev",q:"¿Qué tipo de ejercicio ayuda a prevenir la osteoporosis?",a:"Ejercicios de fuerza",w:["Quedarse en cama","Ninguno, el ejercicio no influye","Solo ejercicio con alcohol"]},
+{t:"prev",q:"La actividad física mantiene los huesos fuertes porque...",a:"evita la descalcificación",w:["aumenta el desgaste del cartílago","reduce la circulación","elimina el calcio"]},
+{t:"prev",q:"¿Cuál NO es un beneficio de la actividad física?",a:"Disminuye la resistencia al estrés",w:["Mejora la circulación y la respiración","Previene enfermedades y la obesidad","Mejora el estado de ánimo"]}
+];
+
+var PAIRS=[
+{t:"base",term:"Esqueleto",def:"Conjunto de los 206 huesos"},
+{t:"base",term:"Sistema osteomuscular",def:"Huesos, cartílagos, músculos, articulaciones, ligamentos y tendones"},
+{t:"base",term:"Zonas del esqueleto",def:"Cráneo y cara, tronco y extremidades"},
+{t:"huesos",term:"Fémur",def:"Hueso largo"},
+{t:"huesos",term:"Carpo y tarso",def:"Huesos cortos, de aspecto cúbico"},
+{t:"huesos",term:"Costillas",def:"Hueso plano, delgado y curvo"},
+{t:"huesos",term:"Vértebras",def:"Huesos irregulares"},
+{t:"huesos",term:"Tejido compacto",def:"Está en el exterior y rodea al esponjoso"},
+{t:"art",term:"Suturas del cráneo",def:"Articulación fibrosa, sin movimiento"},
+{t:"art",term:"Sínfisis del pubis",def:"Articulación cartilaginosa, poco movimiento"},
+{t:"art",term:"Codo y hombro",def:"Articulaciones sinoviales, muy móviles"},
+{t:"art",term:"Articulación",def:"Unión entre dos huesos próximos"},
+{t:"mus",term:"Miocito",def:"Célula del músculo"},
+{t:"mus",term:"Músculo liso",def:"Contracción involuntaria"},
+{t:"mus",term:"Bíceps",def:"Músculo estriado, contracción voluntaria"},
+{t:"mus",term:"Fibra muscular",def:"Grupo de miocitos que se contrae con estímulos nerviosos"},
+{t:"mus",term:"Músculo cardíaco",def:"Músculo del corazón, involuntario"},
+{t:"fun",term:"Sostén",def:"Armazón rígido del cuerpo"},
+{t:"fun",term:"Protección",def:"Cuida los órganos vitales internos"},
+{t:"fun",term:"Motora",def:"Huesos y articulaciones actúan como palancas"},
+{t:"fun",term:"Hematopoyética",def:"Fabrica células sanguíneas en la médula ósea"},
+{t:"fun",term:"Reservorio",def:"Almacena calcio, fósforo, magnesio y sodio"},
+{t:"pat",term:"Fractura",def:"Rotura de un hueso"},
+{t:"pat",term:"Osteoporosis",def:"Pérdida de densidad ósea por falta de calcio"},
+{t:"pat",term:"Artritis",def:"Inflamación de las articulaciones"},
+{t:"pat",term:"Artrosis",def:"Desgaste del cartílago de los extremos de los huesos"},
+{t:"pat",term:"Esguince",def:"Lesión de los ligamentos de una articulación"},
+{t:"pat",term:"Hernia de disco",def:"Sale parte del contenido del disco intervertebral"},
+{t:"pat",term:"Carcinoma óseo",def:"Crecimiento anormal de células del tejido óseo"},
+{t:"prev",term:"Dieta rica en calcio",def:"Ayuda a prevenir la osteoporosis"},
+{t:"prev",term:"Agua al día",def:"De 2 a 2,5 litros"},
+{t:"prev",term:"Sueño",def:"8 horas diarias"},
+{t:"prev",term:"Evitar",def:"Alcohol, drogas y tabaco"},
+{t:"prev",term:"Ejercicio de fuerza",def:"Mantiene los huesos fuertes"}
+];
+
+var SETS=[
+{id:"zona",name:"Zonas del esqueleto",cats:[{id:"cc",n:"Cráneo y cara"},{id:"tr",n:"Tronco"},{id:"ex",n:"Extremidades"}],items:[
+ {t:"Húmero",c:"ex",why:"Es el hueso del brazo."},
+ {t:"Fémur",c:"ex",why:"Es el hueso del muslo."},
+ {t:"Tibia",c:"ex",why:"Es un hueso de la pierna."},
+ {t:"Costillas",c:"tr",why:"Forman parte del tronco."},
+ {t:"Vértebras",c:"tr",why:"La columna forma parte del tronco."},
+ {t:"Sacro",c:"tr",why:"Está en la parte baja de la columna, en el tronco."},
+ {t:"Mandíbula",c:"cc",why:"Es un hueso de la cara."},
+ {t:"Frontal",c:"cc",why:"Es un hueso del cráneo."}]},
+{id:"hueso",name:"Tipos de hueso",cats:[{id:"l",n:"Largo"},{id:"c",n:"Corto"},{id:"p",n:"Plano"},{id:"i",n:"Irregular"}],items:[
+ {t:"Fémur",c:"l",why:"Su longitud predomina sobre la anchura."},
+ {t:"Tibia",c:"l",why:"Su longitud predomina sobre la anchura."},
+ {t:"Húmero",c:"l",why:"Su longitud predomina sobre la anchura."},
+ {t:"Huesos del carpo (mano)",c:"c",why:"No predomina ninguna dimensión: aspecto cúbico."},
+ {t:"Huesos del tarso (pie)",c:"c",why:"No predomina ninguna dimensión: aspecto cúbico."},
+ {t:"Costillas",c:"p",why:"Son delgadas y de aspecto curvo."},
+ {t:"Vértebras",c:"i",why:"Por su forma no entran en los otros tipos."},
+ {t:"Sacro",c:"i",why:"Por su forma no entra en los otros tipos."}]},
+{id:"art",name:"Tipos de articulación",cats:[{id:"f",n:"Fibrosa (sin movimiento)"},{id:"c",n:"Cartilaginosa (poco movimiento)"},{id:"s",n:"Sinovial (muy móvil)"}],items:[
+ {t:"Suturas del cráneo",c:"f",why:"No tienen movimiento."},
+ {t:"Sínfisis del pubis",c:"c",why:"Tiene poco movimiento."},
+ {t:"Codo",c:"s",why:"Gran amplitud de movimiento."},
+ {t:"Cadera",c:"s",why:"Gran amplitud de movimiento."},
+ {t:"Rodilla",c:"s",why:"Gran amplitud de movimiento."},
+ {t:"Hombro",c:"s",why:"Gran amplitud de movimiento."}]},
+{id:"musculo",name:"Tipos de músculo",cats:[{id:"l",n:"Liso"},{id:"e",n:"Estriado o esquelético"},{id:"c",n:"Cardíaco"}],items:[
+ {t:"Bíceps",c:"e",why:"Está unido a huesos y se mueve de forma voluntaria."},
+ {t:"Glúteos",c:"e",why:"Está unido a huesos y se mueve de forma voluntaria."},
+ {t:"Tríceps",c:"e",why:"Está unido a huesos y se mueve de forma voluntaria."},
+ {t:"Gemelos",c:"e",why:"Está unido a huesos y se mueve de forma voluntaria."},
+ {t:"Capa interna del estómago",c:"l",why:"Contracción involuntaria."},
+ {t:"Músculo del corazón",c:"c",why:"Es el músculo cardíaco."}]},
+{id:"func",name:"Funciones",cats:[{id:"s",n:"Sostén"},{id:"p",n:"Protección"},{id:"m",n:"Motora"},{id:"h",n:"Hematopoyética"},{id:"r",n:"Reservorio"}],items:[
+ {t:"Es el armazón rígido del cuerpo",c:"s",why:"Sostén: da forma y apoyo."},
+ {t:"Protege los órganos vitales internos",c:"p",why:"Función de protección."},
+ {t:"Los huesos actúan como palancas cuando se contraen los músculos",c:"m",why:"Función motora: produce movimiento."},
+ {t:"Fabrica plaquetas y glóbulos en la médula ósea",c:"h",why:"Hema = sangre, poyesis = formación."},
+ {t:"Guarda calcio, fósforo y magnesio",c:"r",why:"Reservorio o metabólica: almacena minerales."},
+ {t:"Da forma y apoyo al cuerpo",c:"s",why:"Es la función de sostén."},
+ {t:"Almacena sodio",c:"r",why:"Es un mineral que el hueso almacena."}]},
+{id:"pat",name:"Patologías",cats:[{id:"fr",n:"Fractura"},{id:"he",n:"Hernia de disco"},{id:"os",n:"Osteoporosis"},{id:"ar",n:"Artrosis"},{id:"at",n:"Artritis"},{id:"ca",n:"Carcinoma óseo"},{id:"es",n:"Esguince"}],items:[
+ {t:"Un hueso se rompe",c:"fr",why:"Fractura: se interrumpe la continuidad del tejido óseo."},
+ {t:"Sale parte del contenido del disco intervertebral",c:"he",why:"Hernia de disco."},
+ {t:"El hueso pierde densidad por falta de calcio",c:"os",why:"Osteoporosis."},
+ {t:"Se desgasta el cartílago de los extremos de los huesos",c:"ar",why:"Artrosis: enfermedad degenerativa."},
+ {t:"Las articulaciones se inflaman",c:"at",why:"Artritis: -itis es inflamación."},
+ {t:"Crecen células anormales en el tejido óseo",c:"ca",why:"Carcinoma óseo o tumor óseo."},
+ {t:"Se lesionan los ligamentos que rodean una articulación",c:"es",why:"Esguince."}]},
+{id:"hab",name:"Hábitos",cats:[{id:"a",n:"Ayuda a los huesos"},{id:"p",n:"Los perjudica"}],items:[
+ {t:"Dieta rica en calcio",c:"a",why:"Ayuda a prevenir la osteoporosis."},
+ {t:"Sol moderado",c:"a",why:"La exposición moderada al sol es una medida de prevención."},
+ {t:"Ejercicios de fuerza",c:"a",why:"Mantienen los huesos fuertes."},
+ {t:"Beber de 2 a 2,5 litros de agua",c:"a",why:"Forma parte de las medidas de prevención."},
+ {t:"Dormir 8 horas",c:"a",why:"Forma parte de las medidas de prevención."},
+ {t:"Alcohol",c:"p",why:"Hay que evitar alcohol, drogas y tabaco."},
+ {t:"Tabaco",c:"p",why:"Hay que evitar alcohol, drogas y tabaco."},
+ {t:"Drogas",c:"p",why:"Hay que evitar alcohol, drogas y tabaco."}]}
+];
+
+var RANKS=[[0,"Falange"],[80,"Costilla"],[250,"Fémur"],[500,"Columna"],[900,"Esqueleto completo"]];
+
+/* ---------- utilidades ---------- */
+var store={
+  get:function(k,d){try{var v=localStorage.getItem("hm_"+k);return v===null?d:JSON.parse(v);}catch(e){return d;}},
+  set:function(k,v){try{localStorage.setItem("hm_"+k,JSON.stringify(v));}catch(e){}}
+};
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+function $(s){return document.querySelector(s);}
+
+var state={xp:store.get("xp",0),known:store.get("known",[]),best:store.get("best",0),topic:"all",mode:"cards",setId:"hueso"};
+var stage=$("#stage");
+var cs=null,qz=null,mt=null,cl=null;
+
+function inTopic(t){return state.topic==="all"||state.topic===t;}
+function addXP(n){state.xp+=n;store.set("xp",state.xp);updateHeader();}
+function updateHeader(){
+  var r=0;RANKS.forEach(function(x,i){if(state.xp>=x[0])r=i;});
+  var nxt=RANKS[r+1];
+  $("#rankName").textContent=RANKS[r][1];
+  $("#rankXp").textContent=nxt?(state.xp+" XP · "+(nxt[0]-state.xp)+" para "+nxt[1]):(state.xp+" XP · rango máximo");
+  var pct=nxt?(state.xp-RANKS[r][0])/(nxt[0]-RANKS[r][0])*100:100;
+  $("#xpBar").style.width=pct+"%";
+}
+
+/* ---------- tarjetas ---------- */
+function buildDeck(){
+  var pool=CARDS.filter(function(c){return inTopic(c.t);});
+  cs={deck:shuffle(pool.filter(function(c){return state.known.indexOf(c.id)<0;})),i:0};
+}
+function renderAns(c){
+  var h="";
+  if(Array.isArray(c.a)){h+='<ul class="ans-list">'+c.a.map(function(x){return "<li>"+x+"</li>";}).join("")+"</ul>";}
+  else{h+='<p class="ans">'+c.a+"</p>";}
+  if(c.ex){h+='<div class="ex"><span>'+(c.exl||"Ejemplos")+"</span>"+c.ex.map(function(x){return "<b>"+x+"</b>";}).join("")+"</div>";}
+  if(c.nota){h+='<p class="nota">'+c.nota+"</p>";}
+  return h;
+}
+function viewCards(){
+  if(!cs)buildDeck();
+  var pool=CARDS.filter(function(c){return inTopic(c.t);});
+  var known=pool.filter(function(c){return state.known.indexOf(c.id)>=0;}).length;
+  var h='<div class="meter"><span>'+known+" de "+pool.length+' tarjetas dominadas</span><div class="bar"><i style="width:'+(pool.length?known/pool.length*100:0)+'%"></i></div></div>';
+  if(cs.i>=cs.deck.length){
+    return h+'<div class="panel center"><span class="tag">Bloque completo</span><h2>Dominas todas las tarjetas</h2><p>Has marcado las '+pool.length+' tarjetas de este tema como sabidas. Prueba el test o las parejas para comprobarlo.</p><button class="btn primary" data-act="resetKnown" type="button">Empezar de cero</button></div>';
+  }
+  var c=cs.deck[cs.i];
+  var left=cs.deck.length-cs.i;
+  h+='<div class="flip" id="flip"><div class="flip-in">'+
+    '<div class="flip-face front" data-act="flip" role="button" tabindex="0" aria-label="Girar la tarjeta"><span class="tag">'+TOPIC_NAME[c.t]+'</span><p class="q">'+c.q+'</p><span class="hint">Piensa la respuesta y toca para girar · quedan '+left+'</span></div>'+
+    '<div class="flip-face back" data-act="flip" role="button" tabindex="0" aria-label="Volver a la pregunta"><span class="tag">Respuesta</span>'+renderAns(c)+'</div>'+
+    '</div></div>'+
+    '<div class="btn-row"><button class="btn" data-act="again" type="button">Repasar otra vez</button><button class="btn primary" data-act="known" type="button">Ya me la sé</button></div>';
+  return h;
+}
+
+/* ---------- test ---------- */
+function startQuiz(list){
+  qz={list:shuffle(list).slice(0,10),i:0,score:0,streak:0,wrong:[],picked:null,opts:null,marks:[]};
+  prepQ();
+}
+function prepQ(){var q=qz.list[qz.i];qz.opts=shuffle([q.a].concat(q.w));qz.picked=null;}
+function viewQuiz(){
+  if(!qz)startQuiz(QUIZ.filter(function(q){return inTopic(q.t);}));
+  if(qz.i>=qz.list.length)return quizResult();
+  var q=qz.list[qz.i];
+  var dots=qz.list.map(function(_,k){var c=k<qz.marks.length?(qz.marks[k]?"ok":"ko"):(k===qz.i?"cur":"");return '<i class="'+c+'"></i>';}).join("");
+  var h='<div class="dots" aria-hidden="true">'+dots+'</div><div class="statline"><span>Pregunta <b>'+(qz.i+1)+"</b> de "+qz.list.length+'</span><span>Racha <b>'+qz.streak+"</b></span></div>";
+  h+='<div class="panel"><span class="tag">'+TOPIC_NAME[q.t]+'</span><p class="q" style="margin-top:6px">'+q.q+"</p></div>";
+  h+='<div class="opts">'+qz.opts.map(function(o,k){
+    var cls="opt",dis="";
+    if(qz.picked!==null){dis=" disabled";if(o===q.a)cls+=" right";else if(k===qz.picked)cls+=" wrong";}
+    return '<button class="'+cls+'" data-act="pick" data-k="'+k+'" type="button"'+dis+">"+o+"</button>";
+  }).join("")+"</div>";
+  if(qz.picked!==null){
+    var ok=qz.opts[qz.picked]===q.a;
+    h+='<div class="fb '+(ok?"good":"bad")+'"><strong>'+(ok?"¡Correcto!":"Casi")+"</strong>"+(ok?"":"La respuesta era: "+q.a+". ")+(q.e||"")+"</div>";
+    h+='<button class="btn primary" data-act="next" type="button">'+(qz.i+1>=qz.list.length?"Ver resultado":"Siguiente")+"</button>";
+  }
+  return h;
+}
+function quizResult(){
+  var n=qz.list.length,pct=Math.round(qz.score/n*100);
+  if(pct>state.best){state.best=pct;store.set("best",pct);}
+  var msg=pct===100?"Ronda perfecta.":pct>=80?"Muy bien, ya casi lo tienes.":pct>=50?"Vas por buen camino. Repasa los fallos.":"Toca repasar un poco más. Las tarjetas te ayudarán.";
+  return '<div class="panel center"><span class="tag">Resultado</span><div class="big">'+qz.score+"/"+n+"</div><h2>"+msg+'</h2><p>Mejor resultado: '+state.best+'%</p><div class="btn-row'+(qz.wrong.length?"":" one")+'" style="width:100%;margin-top:8px">'+(qz.wrong.length?'<button class="btn" data-act="quizWrong" type="button">Repasar fallos</button>':"")+'<button class="btn primary" data-act="quizNew" type="button">Otra ronda</button></div></div>';
+}
+
+/* ---------- parejas ---------- */
+function startMatch(){
+  var pool=shuffle(PAIRS.filter(function(p){return inTopic(p.t);})).slice(0,6);
+  if(pool.length<4){
+    var extra=shuffle(PAIRS.filter(function(p){return pool.indexOf(p)<0;})).slice(0,4-pool.length);
+    pool=pool.concat(extra);
+  }
+  var pairs=pool.map(function(p,i){return {id:i,term:p.term,def:p.def};});
+  var ids=pairs.map(function(p){return p.id;});
+  mt={pairs:pairs,left:shuffle(ids),right:shuffle(ids),sel:null,done:[],mistakes:0,flash:null,t0:Date.now(),fin:false,time:0};
+}
+function viewMatch(){
+  if(!mt)startMatch();
+  if(mt.fin){
+    var rec=mt.pairs.map(function(p){return "<li><b>"+p.term+"</b> · "+p.def+"</li>";}).join("");
+    return '<div class="panel center"><span class="tag">Parejas completas</span><h2>'+(mt.mistakes===0?"Sin ningún fallo":mt.mistakes+(mt.mistakes===1?" fallo":" fallos"))+'</h2><p>Has tardado '+mt.time+' segundos.</p><ul class="recap">'+rec+'</ul><button class="btn primary" data-act="matchNew" type="button" style="margin-top:8px">Otra ronda</button></div>';
+  }
+  var byId={};mt.pairs.forEach(function(p){byId[p.id]=p;});
+  function cls(side,id){
+    var c="mbtn"+(side==="l"?" term":"");
+    if(mt.done.indexOf(id)>=0)c+=" done";
+    else if(mt.flash&&((side==="l"&&mt.flash.l===id)||(side==="r"&&mt.flash.r===id)))c+=" bad";
+    else if(mt.sel&&mt.sel.side===side&&mt.sel.id===id)c+=" sel";
+    return c;
+  }
+  var left=mt.left.map(function(id){return '<button class="'+cls("l",id)+'" data-act="m" data-side="l" data-id="'+id+'" type="button"'+(mt.done.indexOf(id)>=0?" disabled":"")+">"+byId[id].term+"</button>";}).join("");
+  var right=mt.right.map(function(id){return '<button class="'+cls("r",id)+'" data-act="m" data-side="r" data-id="'+id+'" type="button"'+(mt.done.indexOf(id)>=0?" disabled":"")+">"+byId[id].def+"</button>";}).join("");
+  return '<div class="statline"><span>Une cada término con su definición</span><span>Fallos <b>'+mt.mistakes+"</b></span></div>"+
+    '<div class="match"><div class="match-col">'+left+'</div><div class="match-col">'+right+"</div></div>";
+}
+
+/* ---------- clasifica ---------- */
+function startCl(items){
+  var set=SETS.filter(function(s){return s.id===state.setId;})[0];
+  cl={set:set,items:shuffle(items||set.items),i:0,right:0,wrong:[],picked:null};
+}
+function viewClassify(){
+  if(!cl)startCl();
+  var chips='<div class="chips" role="group" aria-label="Bloque de ejercicios">'+SETS.map(function(s){return '<button class="chip" data-act="set" data-id="'+s.id+'" aria-pressed="'+(s.id===state.setId)+'" type="button">'+s.name+"</button>";}).join("")+"</div>";
+  if(cl.i>=cl.items.length){
+    var n=cl.items.length;
+    return chips+'<div class="panel center"><span class="tag">Resultado</span><div class="big">'+cl.right+"/"+n+'</div><h2>'+(cl.right===n?"Todo en su sitio.":"Repasa los que has fallado.")+'</h2><div class="btn-row'+(cl.wrong.length?"":" one")+'" style="width:100%;margin-top:8px">'+(cl.wrong.length?'<button class="btn" data-act="clWrong" type="button">Repasar fallos</button>':"")+'<button class="btn primary" data-act="clNew" type="button">Repetir bloque</button></div></div>';
+  }
+  var it=cl.items[cl.i];
+  var h=chips+'<div class="statline"><span>'+cl.set.name+" · <b>"+(cl.i+1)+"</b> de "+cl.items.length+"</span><span>Aciertos <b>"+cl.right+"</b></span></div>";
+  h+='<div class="panel"><span class="tag">¿Dónde va?</span><div class="item">'+it.t+"</div></div>";
+  h+='<div class="cats">'+cl.set.cats.map(function(c){
+    var k="cat",dis="";
+    if(cl.picked!==null){dis=" disabled";if(c.id===it.c)k+=" right";else if(c.id===cl.picked)k+=" wrong";}
+    return '<button class="'+k+'" data-act="cat" data-id="'+c.id+'" type="button"'+dis+">"+c.n+"</button>";
+  }).join("")+"</div>";
+  if(cl.picked!==null){
+    var ok=cl.picked===it.c;
+    h+='<div class="fb '+(ok?"good":"bad")+'"><strong>'+(ok?"¡Bien!":"No va ahí")+"</strong>"+it.why+"</div>";
+    h+='<button class="btn primary" data-act="clNext" type="button">'+(cl.i+1>=cl.items.length?"Ver resultado":"Siguiente")+"</button>";
+  }
+  return h;
+}
+
+/* ---------- render y eventos ---------- */
+function render(){
+  Array.prototype.forEach.call(document.querySelectorAll(".tab"),function(b){b.setAttribute("aria-selected",String(b.getAttribute("data-mode")===state.mode));});
+  Array.prototype.forEach.call(document.querySelectorAll("#chips .chip"),function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-topic")===state.topic));});
+  $("#chips").hidden=state.mode==="classify";
+  var views={cards:viewCards,quiz:viewQuiz,match:viewMatch,classify:viewClassify};
+  stage.innerHTML=views[state.mode]();
+}
+function resetSessions(){cs=null;qz=null;mt=null;cl=null;}
+
+$("#chips").innerHTML=TOPICS.map(function(t){return '<button class="chip" data-topic="'+t[0]+'" aria-pressed="false" type="button">'+t[1]+"</button>";}).join("");
+$("#chips").addEventListener("click",function(e){
+  var b=e.target.closest("[data-topic]");if(!b)return;
+  state.topic=b.getAttribute("data-topic");resetSessions();render();
+});
+$("#tabs").addEventListener("click",function(e){
+  var b=e.target.closest("[data-mode]");if(!b)return;
+  state.mode=b.getAttribute("data-mode");render();
+});
+
+function onAct(el){
+  var act=el.getAttribute("data-act");
+  if(act==="flip"){var f=$("#flip");if(f)f.classList.toggle("on");return;}
+  if(act==="known"){
+    var c=cs.deck[cs.i];
+    if(state.known.indexOf(c.id)<0){state.known.push(c.id);store.set("known",state.known);addXP(5);}
+    cs.i++;render();return;
+  }
+  if(act==="again"){cs.deck.push(cs.deck[cs.i]);cs.i++;render();return;}
+  if(act==="resetKnown"){
+    CARDS.forEach(function(c){if(inTopic(c.t)){var k=state.known.indexOf(c.id);if(k>=0)state.known.splice(k,1);}});
+    store.set("known",state.known);cs=null;render();return;
+  }
+  if(act==="pick"){
+    if(qz.picked!==null)return;
+    var q=qz.list[qz.i];qz.picked=parseInt(el.getAttribute("data-k"),10);
+    var ok=qz.opts[qz.picked]===q.a;
+    qz.marks.push(ok);
+    if(ok){qz.score++;qz.streak++;addXP(10+(qz.streak>=3?5:0));}
+    else{qz.streak=0;qz.wrong.push(q);}
+    render();return;
+  }
+  if(act==="next"){qz.i++;if(qz.i<qz.list.length)prepQ();render();return;}
+  if(act==="quizNew"){qz=null;render();return;}
+  if(act==="quizWrong"){var w=qz.wrong;startQuiz(w);render();return;}
+  if(act==="m"){
+    if(mt.flash)return;
+    var side=el.getAttribute("data-side"),id=parseInt(el.getAttribute("data-id"),10);
+    if(mt.done.indexOf(id)>=0)return;
+    if(!mt.sel||mt.sel.side===side){mt.sel={side:side,id:id};render();return;}
+    var l=side==="r"?mt.sel.id:id,r=side==="r"?id:mt.sel.id;
+    if(l===r){
+      mt.done.push(l);mt.sel=null;addXP(5);
+      if(mt.done.length===mt.pairs.length){mt.fin=true;mt.time=Math.round((Date.now()-mt.t0)/1000);if(mt.mistakes===0)addXP(10);}
+      render();
+    }else{
+      mt.mistakes++;mt.flash={l:l,r:r};mt.sel=null;render();
+      var mine=mt;
+      setTimeout(function(){if(mt===mine){mt.flash=null;render();}},650);
+    }
+    return;
+  }
+  if(act==="matchNew"){mt=null;render();return;}
+  if(act==="set"){state.setId=el.getAttribute("data-id");cl=null;render();return;}
+  if(act==="cat"){
+    if(cl.picked!==null)return;
+    var it=cl.items[cl.i];cl.picked=el.getAttribute("data-id");
+    if(cl.picked===it.c){cl.right++;addXP(5);}else{cl.wrong.push(it);}
+    render();return;
+  }
+  if(act==="clNext"){cl.i++;cl.picked=null;render();return;}
+  if(act==="clNew"){cl=null;render();return;}
+  if(act==="clWrong"){var wi=cl.wrong;startCl(wi);render();return;}
+}
+stage.addEventListener("click",function(e){var el=e.target.closest("[data-act]");if(el)onAct(el);});
+stage.addEventListener("keydown",function(e){
+  if((e.key==="Enter"||e.key===" ")&&e.target.getAttribute&&e.target.getAttribute("data-act")==="flip"){e.preventDefault();onAct(e.target);}
+});
+
+var resetTimer=null;
+$("#reset").addEventListener("click",function(){
+  var b=$("#reset");
+  if(!resetTimer){
+    b.textContent="¿Seguro? Pulsa otra vez para borrar";
+    resetTimer=setTimeout(function(){b.textContent="Borrar progreso";resetTimer=null;},3500);
+    return;
+  }
+  clearTimeout(resetTimer);resetTimer=null;b.textContent="Borrar progreso";
+  state.xp=0;state.known=[];state.best=0;
+  store.set("xp",0);store.set("known",[]);store.set("best",0);
+  resetSessions();updateHeader();render();
+});
+
+updateHeader();render();
+})();
+</script>
+
+</body></html>
